@@ -1,0 +1,35 @@
+---
+# tasks file for docvu.kernel
+
+
+- name: create initial folder for downloading ubuntu kernel
+  shell: mkdir -p "{{linux_kernel_dir}}"
+  become: yes
+  # when: uninstall_collectd and uninstall_collectd_git
+
+- name: Download *_all.deb
+  get_url:
+    url:  http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.13.8/linux-headers-4.13.8-041308_4.13.8-041308.201710180430_all.deb
+    dest: "{{linux_kernel_dir}}"
+
+- name: Download linux_header
+  get_url:
+    url:  http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.13.8/linux-headers-4.13.8-041308-generic_4.13.8-041308.201710180430_amd64.deb
+    dest: "{{linux_kernel_dir}}"
+
+- name: Download linux_images
+  get_url:
+    url: http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.13.8/linux-image-4.13.8-041308-generic_4.13.8-041308.201710180430_amd64.deb
+    dest: "{{linux_kernel_dir}}"
+
+- name: install the packages
+  shell: sudo dpkg -i *.deb
+  args:
+    chdir: "{{linux_kernel_dir}}"
+  become: yes
+
+- name: finally reboot
+  shell: sudo reboot
+  become: yes
+  when: system_reboot
+  

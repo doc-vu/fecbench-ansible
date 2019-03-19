@@ -1,0 +1,40 @@
+---
+# tasks file for rabbitmq_config
+# https://www.erlang-solutions.com/blog/take-control-of-your-rabbitmq-queues.html
+# variable: queue_name = collectd_queue
+- name: ensure we have the requests python library required for the installation
+  pip:
+    name: requests
+
+#https://raw.githubusercontent.com/rabbitmq/rabbitmq-management/rabbitmq_v3_6_10/bin/rabbitmqadmin    
+
+- debug:
+    msg: "User {{ rabbitmq_users.1.user }} {{ rabbitmq_users.1.password }}"
+
+- name: restart the rabbitmq service
+  service:
+    name: rabbitmq-server
+    state: restarted
+  register: result  
+
+- name: ensure we create a new queue
+  rabbitmq_queue:
+    name: "{{ queue_name|default('collectd_queue')}}"
+    login_user: '{{ rabbitmq_users.0.user }}'
+    login_password: '{{ rabbitmq_users.0.password }}'
+    login_host: localhost
+  when: result.changed
+  register: queue
+  until: queue|success
+  retries: 5
+  delay: 10
+    
+- name: ensure we set the queue length
+  rabbitmq_policy: 
+    name: Ten 
+    pattern: "^ {{ queue_name|default('collectd_queue') }}$"
+    tags: '{"max-length-bytes":1000000}'
+    apply_to: queues
+    
+# sudo ./rabbitmqadmin -V / -u indices_user -p indices_manager declare queue name=my_queue1
+   

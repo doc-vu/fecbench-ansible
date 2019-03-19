@@ -1,0 +1,6 @@
+---
+- name: Deploy software locally
+  hosts: localhost
+  become: yes
+  roles:
+    - { role: ansible-go }

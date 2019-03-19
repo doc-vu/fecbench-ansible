@@ -1,0 +1,3 @@
+---
+# defaults file for docvu.pmutools
+pmu_tools_dir: "/opt/pmu-tools"

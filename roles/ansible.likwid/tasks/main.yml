@@ -1,0 +1,55 @@
+---
+# tasks file for ansible.likwid
+
+- name: "Uninstall the likwid"
+  shell: cd likwid-* && make uninstall && rm -rf likwid-*
+  args:
+    chdir: "{{likwid_dir}}"
+  become: yes
+  when: uninstall_likwid
+  ignore_errors: yes
+
+- name: "Uninstall the likwid"
+  shell: make uninstall
+  args:
+    chdir: "{{likwid_dir}}"
+  become: yes
+  when: uninstall_likwid
+  ignore_errors: yes
+
+# Here we will clione
+- name: create initial folder for downloading likwid
+  shell: mkdir -p "{{likwid_dir}}"
+  become: yes
+
+# tasks file for docvu.intelcmt
+
+- name: "Download the likwid from git package"
+  git: 
+    dest: "{{likwid_dir}}"
+    repo: "https://github.com/RRZE-HPC/likwid.git"
+  become: yes
+  when: install_likwid_git
+
+- name: Extract likwid-stable.tar.gz
+  unarchive:
+    src: http://ftp.fau.de/pub/likwid/likwid-stable.tar.gz
+    dest: "{{likwid_dir}}"
+    remote_src: yes
+  when: install_likwid_ftp    
+
+- name: install the packages
+  shell: cd likwid-* && make && make install
+  args:
+    chdir: "{{likwid_dir}}"
+  become: yes
+  when: install_likwid_ftp    
+
+
+- name: install the packages
+  shell: make && make install
+  args:
+    chdir: "{{likwid_dir}}"
+  become: yes
+  when: install_likwid_git
+

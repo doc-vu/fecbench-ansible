@@ -1,0 +1,8 @@
+{% if collectd_nvidia_gpu %}
+LoadPlugin python   
+<Plugin python>   
+    ModulePath "/usr/share/collectd/collectd-nvidia/collectd_cuda"
+    Interactive False   
+    Import "cuda_collectd"    
+</Plugin>
+{% endif %}

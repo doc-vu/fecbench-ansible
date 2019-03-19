@@ -1,0 +1,5 @@
+---
+# tasks file for ansible-pystatsd
+- name: install pystatsd
+  pip:
+    name: statsd

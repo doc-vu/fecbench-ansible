@@ -1,0 +1,16 @@
+--- 
+- name: "Deploy software locally"
+  become: true
+  hosts: localhost
+  tasks: 
+    - name: "update the etc hosts for indices-manager"
+      lineinfile: 
+        group: root
+        line: "{{indices_manager_ip}} indices-manager"
+        mode: 420
+        owner: root
+        path: /etc/hosts
+        regexp: indices-manager
+        state: present
+  vars: 
+    indices_manager_ip: dockerutils_servers_1

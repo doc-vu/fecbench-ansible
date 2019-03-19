@@ -1,0 +1,50 @@
+---
+# tasks file for docvu.pmutools
+
+- name: "Download the pmu-tools package"
+  git: 
+    dest: "{{ pmu_tools_dir }}"
+    repo: "https://github.com/andikleen/pmu-tools.git"
+    update: no
+  become: yes
+
+- name: add "{{pmu_tools_dir}}" to path
+  lineinfile: >
+   dest=/etc/environment
+   state=present
+   backrefs=yes
+   regexp='PATH=(["]*)((?!.*?{{pmu_tools_dir}}).*?)(["]*)$'
+   line="PATH=\1\2:{{pmu_tools_dir}}\3"
+  become: yes 
+
+- name: fix pmu-tools CFLAGS to include -fPIC
+  replace:
+    path: "{{ pmu_tools_dir }}/jevents/Makefile"
+    regexp: "CFLAGS := -g -Wall -O2 -Wno-unused-result"
+    replace: "CFLAGS := -g -Wall -O2 -Wno-unused-result -fPIC"
+    backup: yes
+  become: yes  
+
+- name: make install the intelcmtcat
+  shell: make && sudo make install
+  args:
+    chdir: "{{ pmu_tools_dir }}/jevents"
+  become: yes
+
+- name: Download the event list for the current intel architecture
+  shell: python event_download.py | grep "my event list" | awk '{print $4}'
+  args:
+    chdir: "{{ pmu_tools_dir }}"
+  register: event_dir
+  become: yes
+
+- name: save the location to file
+  shell: touch "{{ pmu_tools_dir }}"/eventlist_info.txt && echo "{{ event_dir.stdout }}" >  "{{ pmu_tools_dir }}"/eventlist_info.txt
+  become: yes
+
+- set_fact: 
+    pmutools_event_dir: "{{ event_dir.stdout }}"
+
+- debug:
+    var: pmutools_event_dir
+    verbosity: 2

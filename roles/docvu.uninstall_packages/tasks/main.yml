@@ -1,0 +1,19 @@
+---
+# tasks file for docvu.uninstall_packages
+- name: disable the systemd service
+  shell: sudo service collectd stop && sudo systemctl disable collectd
+  become: yes
+  when: uninstall_collectd and uninstall_collectd_git
+
+- name: make uninstall the collectd
+  shell: sudo make uninstall
+  args:
+    chdir: "{{ collectd_prefix_git_src }}"
+  become: yes
+  ignore_errors: yes
+  when: uninstall_collectd and uninstall_collectd_git
+
+- name: remove the config files
+  shell: rm -rf {{collectd_prefix|default('/opt/collectd')}}
+  become: yes
+  when: uninstall_collectd and uninstall_collectd_git

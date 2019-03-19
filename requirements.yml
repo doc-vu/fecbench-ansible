@@ -1,0 +1,49 @@
+# git: Use to install the git
+# - src: geerlingguy.git
+
+#collecd Using the collectd ppa no-recommends
+- src: https://github.com/doc-vu/Stouts.collectd.git
+  version: develop
+  name: Stouts.collectd
+
+# Use to install statsd.
+- src: https://github.com/Temelio/ansible-role-statsd.git
+  version: master
+  name: ansible-role-statsd
+
+# Install the rabbitmq
+- src: https://github.com/Stouts/Stouts.rabbitmq.git
+  version: develop
+  name: Stouts.rabbitmq
+
+- src: geerlingguy.pip
+- src: geerlingguy.docker
+
+- src: mtchavez.influxdb
+
+- src: https://github.com/impca/Stouts.grafana.git
+  version: develop
+  name: Stouts.grafana
+
+# # webgme
+# - src: https://github.com/webgme/ansible-role-webgme.git
+#   version: master
+#   name: webgme
+
+- src: https://github.com/jlund/ansible-go.git
+  version: master
+  name: ansible-go
+
+- src: chrismeyersfsu.provision_docker
+  name: provision_docker
+- src: chrismeyersfsu.required_vars
+- src: chrismeyersfsu.iptables
+
+- src: https://github.com/influxdata/ansible-chronograf.git
+  version: master
+  name: ansible-chronograf
+
+- src: https://github.com/m4rcu5nl/ansible-role-zerotier.git
+  version: master
+  name: ansible-role-zerotier
+

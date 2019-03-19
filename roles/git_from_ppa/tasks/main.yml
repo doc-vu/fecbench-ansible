@@ -1,0 +1,15 @@
+--- 
+- name: update git_rep_ppa
+  become: true
+  apt_repository: 
+    repo: "ppa:git-core/ppa"
+- name: install git
+  become: true
+  apt: 
+    state: present
+    update_cache: true
+    pkg: "{{ item }}"
+  with_items: 
+    - git
+  
+  

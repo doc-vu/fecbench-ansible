@@ -1,0 +1,86 @@
+---
+
+- name: Get hostname
+  shell: echo $HOSTNAME
+  register: hostname_var
+
+- name: add myself to /etc/hosts
+  lineinfile:
+    dest: /etc/hosts
+    line: "127.0.0.1 {{ hostname_var.stdout }}"
+    state: present
+  ignore_errors: yes  
+
+- name: install necessary packages
+  apt:
+    pkg: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - tar
+    - unzip
+    - wget
+    - curl
+    - nano
+    - librabbitmq-dev
+    - libyajl-dev
+    - numactl
+    - python3-pip
+    - git
+    - libtool
+    - python-setuptools
+    - python3-setuptools
+
+- name: install ntp
+  action: "{{ ansible_pkg_mgr }}"
+  args:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+   - ntpdate  
+
+- name: Execute ntpdate runs
+  command: "ntpdate -s {{ ntpdate_server|default('0.pool.ntp.org') }}"
+  ignore_errors: yes
+
+- name: install ntp
+  apt:
+    pkg: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - ntp
+  notify: ntp restart
+
+
+- name: Execute the numactl to get the numa core
+  shell:  numactl -H | grep "available:" | awk '{print $2; exit}'
+  register: numa_nodes
+
+# - name: set the variable 
+- set_fact: 
+    numa_node_count: "{{ numa_nodes.stdout }}"
+
+# - name: Dump git_installed_version to file
+#   debug: msg= {{ numa_node_count }}
+- debug:
+    var: numa_node_count
+    verbosity: 2
+
+- name: Execute the numactl to get the numa node cpu mapping
+  shell: numactl -H | grep "cpus:"| cut -d":" -s -f2 | awk '{$1=$1};1' | sed 's/ /,/g'
+  register: numa_nodes_cpu
+
+# - name: set the variable 
+- set_fact: 
+    collectd_numa_node_cpus: "{{ numa_nodes_cpu.stdout_lines }}"
+
+# - name: Dump git_installed_version to file
+#   debug: msg= {{ numa_node_count }}
+- debug:
+    var: collectd_numa_node_cpus
+    verbosity: 2
+# numactl -H | grep "cpus:"| cut -d":" -s -f2 | awk '{$1=$1};1' | sed 's/ /,/g'
+
+- name: Update Python Pip packages
+  shell: pip install --upgrade pip virtualenv

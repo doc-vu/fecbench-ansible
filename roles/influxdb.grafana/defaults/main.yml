@@ -1,0 +1,3 @@
+---
+# defaults file for influxdb.grafana
+influxdb_database: collectd_db

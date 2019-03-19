@@ -1,0 +1,3 @@
+---
+# defaults file for rabbitmq_config
+queue_name: 'collectd_queue' 

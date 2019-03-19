@@ -1,0 +1,17 @@
+---
+# vars file for rabbitmq_config
+rabbitmq_users:                         # Ensure the users added
+  - user: "admin"
+    password: "admin"
+    vhost: /
+    configure_priv: .*
+    read_priv: .*
+    write_priv: .*
+    tags: administrator
+  - user: "indices_user"
+    password: "indices_manager"
+    vhost: /
+    configure_priv: .*
+    read_priv: .*
+    write_priv: .*
+    tags: administrator

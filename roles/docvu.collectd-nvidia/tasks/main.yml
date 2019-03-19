@@ -1,0 +1,14 @@
+--- 
+- 
+  name: "Configure Additional Plugin Nvidia CUDA Stats 1 of 2"
+  git: 
+    dest: /usr/share/collectd/collectd-nvidia
+    force: true
+    repo: "https://github.com/TomHetmer/cuda-collectd.git"
+
+- name: "Configure Additional Plugin Nvidia Cuda Stats 2 of 2"
+  # notify: "collectd restart"
+  template: src=nvidia.conf.j2 dest=/opt/collectd/etc/conf.d/nvidia.conf validate='/opt/collectd/sbin/collectd -t -C %s'
+
+- name: restart collectd
+  service: name=collectd state=restarted

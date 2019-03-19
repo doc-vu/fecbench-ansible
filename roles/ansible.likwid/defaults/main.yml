@@ -1,0 +1,6 @@
+---
+# defaults file for ansible.likwid
+likwid_dir: /opt/likwid
+install_likwid_git: yes
+install_likwid_ftp: no
+uninstall_likwid: no

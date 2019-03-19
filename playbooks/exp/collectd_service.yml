@@ -1,0 +1,23 @@
+## USAGE:
+## TO STOP COLLECTD
+## ansible-playbook ./playbooks/exp/collectd_service.yml --extra-var "stop_collectd=true" -i upsara_inv --limit 0.0.0.0 -vvv
+## START:
+## ansible-playbook ./playbooks/exp/collectd_service.yml --extra-var "start_collectd=true" -i upsara_inv --limit 0.0.0.0 -vvv  
+- hosts: all
+  become: yes
+  vars:
+    start_collectd: false
+    stop_collectd: false
+
+  tasks:
+    - name: stop the collectd service
+      service:
+        name: collectd
+        state: stopped
+      when: "{{ stop_collectd }}"
+        
+    - name: start the collectd service
+      service:
+        name: collectd
+        state: restarted
+      when: "{{ start_collectd }}"

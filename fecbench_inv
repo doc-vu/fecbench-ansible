@@ -1,0 +1,8 @@
+[localhost]
+localhost ansible_connection=local
+
+[client]
+x.x.x.x ansible_ssh_private_key_file="/home/vagrant/keys/chameli/chameleon.pem" ansible_python_interpreter=/usr/bin/python3 ansible_user=cc
+
+[server]
+y.y.y.y ansible_ssh_private_key_file="/home/vagrant/keys/chameli/chameleon.pem" ansible_python_interpreter=/usr/bin/python3 ansible_user=cc

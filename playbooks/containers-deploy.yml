@@ -1,0 +1,11 @@
+---
+- name: Bring up docker containers
+  hosts: localhost
+  gather_facts: false
+  roles:
+    - role: provision_docker
+      provision_docker_privileged: false
+      provision_docker_inventory_group: "{{ groups['client'] }}"
+    - role: provision_docker
+      provision_docker_privileged: false
+      provision_docker_inventory_group: "{{ groups['server'] }}"

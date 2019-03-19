@@ -1,0 +1,19 @@
+---
+# tasks file for docvu.intelcmt
+
+- name: "Download the intelcmtcat package"
+  git: 
+    dest: "{{ intel_cmt_dir }}"
+    repo: "https://github.com/01org/intel-cmt-cat.git"
+  become: yes
+
+- name: make install the intelcmtcat
+  shell: make && sudo make install PREFIX=/usr
+  args:
+    chdir: "{{ intel_cmt_dir }}"
+  become: yes
+
+- name: Load module msr
+  shell: modprobe msr
+  become: yes
+

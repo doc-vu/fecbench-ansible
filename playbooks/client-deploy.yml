@@ -1,0 +1,45 @@
+---
+- name: Deploy benchmark client
+  hosts: client
+  become: yes
+  roles:
+# - geerlingguy.docker
+    - {  role: apt-common,
+         become: yes,
+         ignore_error: yes
+         }
+    - { role: docvu.collectd-nvidia,
+         collectd_nvidia_gpu: yes,
+         become: yes,
+         ignore_error: no
+        }        
+    - { role: Stouts.collectd,
+        install_collectd: yes,
+        become: yes, 
+        collectd_use_git: no, 
+        collectd_use_ppa: yes, 
+        ignore_error: yes,
+        collectd_logpath: '/var/log/collectd.log',
+        collectd_csv_logdir: '/var/log/csv',
+        collectd_fdqnlookup: true,
+        collectd_intel_pmutools: no,
+        collectd_intel_rdt: no,
+        collectd_write_amqp: yes,
+        collectd_numa_cpu_aggr: no,
+        docker_stats: yes
+        }
+
+  tasks: 
+    - name: "update the etc hosts for indices-manager"
+      become: yes
+      sudo: yes
+      lineinfile: 
+        group: root
+        line: "{{indices_manager_ip}} indices-manager"
+        mode: 420
+        owner: root
+        path: /etc/hosts
+        regexp: indices-manager
+        state: present
+  vars: 
+    indices_manager_ip: x.x.x.x

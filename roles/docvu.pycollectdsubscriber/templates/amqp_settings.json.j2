@@ -1,0 +1,11 @@
+{
+  "host": "{{fecbench_master_ip|default('127.0.0.1')}}",
+  "port": "5672",
+  "user": "indices_user",
+  "password": "indices_manager",
+  "exchange": "collectd-exchange",
+  "exchangetype": "direct",
+  "queue": "collectd_queue",
+  "bindingkey": "indices-perf-key",
+  "consumertag": "simple-consumer"
+}

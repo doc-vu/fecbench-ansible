@@ -1,0 +1,8 @@
+---
+# defaults file for docvu.uninstall_packages
+
+uninstall_collectd: yes
+uninstall_collectd_git: yes
+collectd_prefix_git_src: "/home/ubuntu/collectd"
+collectd_prefix: "/opt/collectd"
+uninstall_collectd_ppa: no

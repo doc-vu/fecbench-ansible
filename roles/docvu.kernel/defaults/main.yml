@@ -1,0 +1,5 @@
+---
+# defaults file for docvu.kernel
+
+linux_kernel_dir: "/home/ubuntu/linux_kernel_pack"
+system_reboot: no

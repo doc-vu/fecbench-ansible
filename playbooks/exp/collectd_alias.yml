@@ -1,0 +1,24 @@
+## USAGE:
+## TO add the alias for COLLECTD
+## ansible-playbook ./playbooks/exp/collectd_alias.yml -i upsara_inv --limit -vvv
+- hosts: all
+  become: yes
+
+  tasks:
+    - name: add cstart,cstop,cstatus for collectd service
+      blockinfile:
+        path: "{{ansible_env.HOME}}/.bashrc"
+        block: |
+          ##collectd service alias
+          alias cstart="sudo service collectd start"
+          alias cstop="sudo service collectd stop"
+          alias cstatus="sudo service collectd status"
+   
+    - name: add cstart,cstop,cstatus for collectd service root
+      blockinfile:
+        path: /root/.bashrc
+        block: |
+          ##collectd service alias
+          alias cstart="sudo service collectd start"
+          alias cstop="sudo service collectd stop"
+          alias cstatus="sudo service collectd status"

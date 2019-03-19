@@ -1,0 +1,23 @@
+ansible-playbook playbook/server-deploy.yml -vvv
+
+
+ansible-playbook ./playbooks/server-deploy.yml -i upsara_inv --limit server -vvv
+
+ansible-playbook playbooks/client-deploy.yml -i fec_bench --limit client -vvv
+
+
+
+ansible-playbook playbooks/client-deploy.yml -i gpu_machine_inv --limit client -vvv
+
+
+ansible-playbook playbooks/client-deploy.yml -i minnow_inv --limit client -vvv
+
+chmod 400 chameleon.pem
+
+
+ansible-playbook playbooks/server-deploy.yml -i chameli_inv --limit server -vvv
+
+ansible-playbook playbooks/server-deploy.yml -i chameli_inv --limit client -vvv
+
+
+

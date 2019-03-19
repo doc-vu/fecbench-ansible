@@ -1,0 +1,25 @@
+---
+# tasks file for influxdb.grafana
+# first add a database to the influxdb
+#curl -i -XPOST http://localhost:8086/query --data-urlencode "q=CREATE DATABASE mydb"
+# create user
+# curl "http://localhost:8086/query" --data-urlencode "q=CREATE USER myuser WITH PASSWORD 'mypass' WITH ALL PRIVILEGES"
+
+- name: ensure to install curl
+  apt:
+    name: curl
+    state: present
+
+- name: first add a database to the influxdb
+  shell: curl -i -XPOST http://localhost:8086/query --data-urlencode "q=CREATE DATABASE "{{ influxdb_database|default('collectd_db')}}""
+
+- name: next copy the curl file to the temp directory
+  template:
+      src: curl_datastore.j2
+      dest: /tmp/curl_datastore
+
+- name: execute the command
+  shell: sh /tmp/curl_datastore
+
+# create the influxdb datastore in the grafana
+# curl 'http://admin:admin@127.0.0.1:3000/api/datasources' -X POST -H 'Content-Type: application/json;charset=UTF-8' --data-binary '{"name":"influx","type":"influxdb","url":"http://localhost:8086","access":"proxy","isDefault":true,"database":"collectd_db","user":"admin","password":"admin"}'

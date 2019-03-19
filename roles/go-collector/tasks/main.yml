@@ -1,0 +1,15 @@
+--- 
+- name: "Download the go-collector package"
+  git: 
+    dest: /home/ubuntu/go-collector
+    repo: "https://github.com/doc-vu/indices.git"
+  
+# - name: "update the gopath1"
+#   shell: ". /etc/profile.d/go-path.sh && . /etc/profile.d/go-bin.sh && go get /home/ubuntu/go-collector/src/services/collector/src/collector.go && go run /home/ubuntu/go-collector/src/services/collector/src/collector.go"
+
+# - name: "update the gopath2"
+#   shell: ". /etc/profile.d/go-path.sh"
+  
+# - name: "run the collector"
+#   command: "go run /home/ubuntu/go-collector/src/services/collector/src/collector.go &"
+  
