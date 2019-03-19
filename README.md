@@ -41,6 +41,13 @@ y.y.y.y ansible_ssh_private_key_file="/home/vagrant/keys/chameli/chameleon.pem" 
  - File: server-deploy.yml fecbench_master_ip --> to the IP address of the Master Node
  - File: client-deploy.yml indices_manager_ip --> IP address of the Master Node
 
+4) We also want to comment out the lines if the SLAVES have no GPU modules. The file to update is client-deploy.yml.
+    ```
+    #- {  role: apt-common,
+    #     become: yes,
+    #     ignore_error: yes
+    #     }
+    ```     
 4) Now we are ready to install the packages.
 
 ```
