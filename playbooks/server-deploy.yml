@@ -8,8 +8,8 @@
     - { role: Stouts.grafana}
     - { role: influxdb.grafana}
     - { role: rabbitmq_config }
-    - { role: ansible-go }
-    - { role: go-collector }
+    # - { role: ansible-go }
+    # - { role: go-collector }
     - { role: ansible-chronograf }
     - { role: docvu.pycollectdsubscriber }
   vars: 

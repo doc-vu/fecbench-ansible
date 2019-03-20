@@ -4,6 +4,7 @@
   git: 
     dest: $HOME/pycollectdsubscriber
     repo: "https://github.com/doc-vu/pycollectdsubscriber.git"
+    force: yes
 
 - name: install the pre-requisites
   shell: sh install_dependency.sh

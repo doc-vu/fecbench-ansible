@@ -18,6 +18,7 @@
         become: yes, 
         collectd_use_git: no, 
         collectd_use_ppa: yes, 
+        collectd_use_ppa_ci: no,
         ignore_error: yes,
         collectd_logpath: '/var/log/collectd.log',
         collectd_csv_logdir: '/var/log/csv',
@@ -31,7 +32,7 @@
 
   tasks: 
     - name: "update the etc hosts for indices-manager"
-      become: yes
+      #become: yes
       sudo: yes
       lineinfile: 
         group: root
