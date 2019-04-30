@@ -76,3 +76,189 @@ On the Client Machine:
 sudo service collectd status
 ```
 
+
+
+Schema for the InfluxDB Database:
+------
+
+```
+> show tag keys
+name: container_metrics
+tagKey
+------
+host
+instance
+
+name: host_gpu_metrics
+tagKey
+------
+host
+instance
+
+name: host_metrics
+tagKey
+------
+host
+instance
+
+name: host_metrics_micro
+tagKey
+------
+host
+instance
+
+name: unknown
+tagKey
+------
+host
+instance
+```
+
+```
+> show field keys from container_metrics
+name: container_metrics
+fieldKey                               fieldType
+--------                               ---------
+blkio_io_service_bytes_recursive_async float
+blkio_io_service_bytes_recursive_read  float
+blkio_io_service_bytes_recursive_sync  float
+blkio_io_service_bytes_recursive_total float
+blkio_io_service_bytes_recursive_write float
+cpu.percent_value                      float
+cpu.usage_kernelmode                   float
+cpu.usage_system                       float
+cpu.usage_total                        float
+cpu.usage_usermode                     float
+cs                                     float
+interval                               float
+cycles                                 float
+memory.usage_limit                     float
+instructions                           float
+memory.usage_max                       float
+memory.usage_total                     float
+network.usage_eth0_rx_bytes            float
+network.usage_eth0_rx_dropped          float
+network.usage_eth0_rx_errors           float
+network.usage_eth0_rx_packets          float
+network.usage_eth0_tx_bytes            float
+network.usage_eth0_tx_dropped          float
+network.usage_eth0_tx_errors           float
+network.usage_eth0_tx_packets          float
+page-faults                            float
+network.usage_eth1_rx_bytes            float
+network.usage_eth1_rx_dropped          float
+network.usage_eth1_rx_errors           float
+network.usage_eth1_rx_packets          float
+network.usage_eth1_tx_bytes            float
+network.usage_eth1_tx_dropped          float
+network.usage_eth1_tx_errors           float
+network.usage_eth1_tx_packets          float
+
+
+> show field keys from host_metrics
+name: host_metrics
+fieldKey                      fieldType
+--------                      ---------
+contextswitch                 float
+cpu                           float
+cs                            float
+disk_io_time_io_time          float
+disk_io_time_weighted_io_time float
+disk_octets_read              float
+disk_octets_write             float
+if_dropped_rx                 float
+if_dropped_tx                 float
+if_errors_rx                  float
+if_errors_tx                  float
+if_octets_rx                  float
+if_octets_tx                  float
+if_packets_rx                 float
+if_packets_tx                 float
+interval                      float
+kvm_exit                      float
+major-faults                  float
+memory                        float
+page-faults                   float
+rx                            float
+sched_stat_iowait             float
+sched_stat_wait               float
+tx                            float
+sched_switch                  float
+
+> show field keys from host_metrics_micro
+name: host_metrics_micro
+fieldKey                fieldType
+--------                ---------
+CPI                     float
+interval                float
+l1_2_bw                 float
+l1_l2_totaldata         float
+l2_3_bw                 float
+l2_l3_totaldata         float
+l3_bw                   float
+l3_system_totaldata     float
+mem_bw                  float
+memory_data             float
+L1-dcache-load-misses   float
+L1-dcache-loads         float
+L1-dcache-stores        float
+L1-icache-load-misses   float
+LLC-load-misses         float
+LLC-loads               float
+LLC-store-misses        float
+LLC-stores              float
+alignment-faults        float
+branch-load-misses      float
+branch-loads            float
+branch-misses           float
+branches                float
+bus-cycles              float
+cache-misses            float
+cache-references        float
+context-switches        float
+cpu-clock               float
+cpu-cycles              float
+cpu-migrations          float
+dTLB-load-misses        float
+dTLB-loads              float
+dTLB-store-misses       float
+dTLB-stores             float
+emulation-faults        float
+iTLB-load-misses        float
+iTLB-loads              float
+instructions            float
+l2_rqsts.code_rd_hit    float
+l2_rqsts.code_rd_miss   float
+major-faults            float
+minor-faults            float
+page-faults             float
+task-clock              float
+cpufreq_gpu_clock_value float
+cpufreq_mem_clock_value float
+memory_total_value      float
+memory_used_value       float
+percent_dec_util_value  float
+percent_enc_util_value  float
+percent_gpu_util_value  float
+percent_mem_util_value  float
+power_power_draw_value  float
+temperature_value       float
+
+> show field keys from host_gpu_metrics
+name: host_gpu_metrics
+fieldKey                fieldType
+--------                ---------
+cpufreq_gpu_clock_value float
+cpufreq_mem_clock_value float
+interval                float
+memory_total_value      float
+memory_used_value       float
+percent_dec_util_value  float
+percent_enc_util_value  float
+percent_gpu_util_value  float
+percent_mem_util_value  float
+power_power_draw_value  float
+temperature_value       float
+
+```
+
