@@ -1,2 +1,4 @@
 ---
 # defaults file for docvu.collectd-nvidia
+collectd_config_dir: '/etc/collectd/conf.d'
+collectd_sbin_path: '/usr/sbin'

@@ -11,6 +11,36 @@
     state: present
   ignore_errors: yes  
 
+# - name: configure / Update yum packages
+#   yum:
+#     name: '*'
+#     state: latest
+#     update_cache: yes
+#   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+
+
+- name: install necessary packages YUM
+  yum: 
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - tar
+    - unzip
+    - wget
+    - curl
+    - nano
+    - librabbitmq-devel
+    - yajl-devel
+    - numactl
+    - libcap-devel
+    # - python36-pip
+    - git
+    - libtool
+    - python-setuptools
+    # - python36-setuptools
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
 - name: install necessary packages
   apt:
     pkg: "{{ item }}"
@@ -30,6 +60,7 @@
     - libtool
     - python-setuptools
     - python3-setuptools
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'  
 
 - name: install ntp
   action: "{{ ansible_pkg_mgr }}"
@@ -43,14 +74,14 @@
   command: "ntpdate -s {{ ntpdate_server|default('0.pool.ntp.org') }}"
   ignore_errors: yes
 
-- name: install ntp
-  apt:
-    pkg: "{{ item }}"
-    state: present
-    update_cache: yes
-  with_items:
-    - ntp
-  notify: ntp restart
+# - name: install ntp
+#   apt:
+#     pkg: "{{ item }}"
+#     state: present
+#     update_cache: yes
+#   with_items:
+#     - ntp
+#   notify: ntp restart
 
 
 - name: Execute the numactl to get the numa core
