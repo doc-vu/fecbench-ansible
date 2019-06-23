@@ -1,0 +1,23 @@
+---
+- name: install necessary packages YUM
+  yum: 
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - git
+    - python-setuptools
+    # - python36-setuptools
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: "Download the FECBENCH-SERVER_DOCKER git package"
+  git: 
+    dest: $HOME/fecbench-server-docker
+    repo: "https://github.com/doc-vu/fecbench-server-docker.git"
+    force: yes
+
+- name: pull the docker images
+  shell: docker-compose pull && docker-compose build && docker-compose up -d
+  args:
+    chdir: $HOME/fecbench-server-docker
+  become: yes
+

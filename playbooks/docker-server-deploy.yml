@@ -1,0 +1,13 @@
+---
+- name: Deploy FECBench Dockererize benchmark server
+  hosts: server
+  become: yes
+  roles:
+    - {  role: geerlingguy.pip,
+         become: yes,
+         ignore_error: yes
+         }
+    - geerlingguy.docker
+    - { role: docvu.fecbenchserverdocker }
+  # vars: 
+  #   fecbench_master_ip: y.y.y.y
