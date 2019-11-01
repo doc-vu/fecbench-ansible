@@ -18,6 +18,8 @@
         collectd_use_git: no, 
         collectd_use_ppa: yes, 
         collectd_use_ppa_ci: no,
+        collectd_use_ppa_latest: yes,
+        collectd_use_ppa_minimal: yes,
         ignore_error: yes,
         collectd_logpath: '/var/log/collectd.log',
         collectd_csv_logdir: '/var/log/csv',
@@ -28,19 +30,19 @@
         collectd_numa_cpu_aggr: no,
         docker_stats: yes,
         # YUM SPECIFIC
-        collectd_config_file: '/etc/collectd.conf',
-        collectd_config_dir: '/etc/collectd.d/',
+        #collectd_config_file: '/etc/collectd.conf',
+        #collectd_config_dir: '/etc/collectd.d/',
         # collectd_plugins_dir: '/usr/lib64/collectd',
-        collectd_sbin_path: '/usr/sbin'
+        #collectd_sbin_path: '/usr/sbin'
 
         }
-    - { role: docvu.collectd-nvidia,
-         collectd_nvidia_gpu: yes,
-         become: yes,
-         ignore_error: no,
-         collectd_config_dir: '/etc/collectd.d',
-         collectd_sbin_path: '/usr/sbin'
-        }  
+    #- { role: docvu.collectd-nvidia,
+    #     collectd_nvidia_gpu: yes,
+    #     become: yes,
+    #     ignore_error: no,
+    #     collectd_config_dir: '/etc/collectd.d',
+    #     collectd_sbin_path: '/usr/sbin'
+    #    }  
 
   tasks: 
     - name: "update the etc hosts for indices-manager"
